@@ -1,0 +1,62 @@
+{
+  "manifest_version": 3,
+  "name": "PhishGuard — Real-Time Phishing Protection",
+  "short_name": "PhishGuard",
+  "version": "1.2.0",
+  "description": "Detects phishing and credential-harvesting pages in real time and blocks them before you can type anything.",
+  "minimum_chrome_version": "102",
+
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": [
+        "https://phishguard-phi-roan.vercel.app/*"
+      ],
+      "js": ["warning.js", "content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "PhishGuard",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["warning.css"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}
